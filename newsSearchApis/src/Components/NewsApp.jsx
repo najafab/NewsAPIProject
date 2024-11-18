@@ -3,27 +3,24 @@ import Card from "./Card";
 
 const NewsApp = () => {
   const [search, setSearch] = useState("pakistan");
-  const [newsData, setNewsData] = useState([]); // Default to empty array
+  const [newsData, setNewsData] = useState([]);
   const API_KEY = "46d0f0dd84284f218dbda86fd5d08266";
 
-  // Function to fetch data based on the search term
   const getData = async () => {
     const response = await fetch(
       `https://newsapi.org/v2/everything?q=${search}&apiKey=${API_KEY}`
     );
     const jasonData = await response.json();
-    console.log(jasonData.articles); // Logging the response
-    setNewsData(jasonData.articles); // Set news data to state
+    console.log(jasonData.articles);
+    setNewsData(jasonData.articles);
   };
 
-  // This will run once when the component mounts
   useEffect(() => {
     getData();
-  }, [search]); // Re-fetch data when 'search' changes
+  }, [search]);
 
-  // Handling search input changes
   const handleInput = (e) => {
-    setSearch(e.target.value); // Update search state
+    setSearch(e.target.value);
   };
 
   return (
@@ -58,7 +55,6 @@ const NewsApp = () => {
       </div>
 
       <div>
-        {/* Conditional rendering: show loading until data is fetched */}
         {newsData.length === 0 ? <p>Loading...</p> : <Card data={newsData} />}
       </div>
     </>
